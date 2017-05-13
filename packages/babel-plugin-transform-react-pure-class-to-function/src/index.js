@@ -89,15 +89,11 @@ module.exports = function({ types: t }) {
 
         const functionalComponent = t.functionDeclaration(
           id,
-          [t.identifier('props')],
+          [t.identifier(renameProps ? '__props': 'props')],
           state.renderMethod.node.body
-        replacement.push(
-          t.functionDeclaration(
-            id,
-            [t.identifier(renameProps ? '__props': 'props')],
-            state.renderMethod.node.body
-          )
         );
+        
+        replacement.push(functionalComponent);
 
         const staticProps = state.properties.map(prop => t.expressionStatement(
           t.assignmentExpression(
